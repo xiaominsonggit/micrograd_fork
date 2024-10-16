@@ -1,7 +1,7 @@
 
 # micrograd
 
-![awww](puppy.jpg)
+![flow chart forward back prop](docs/images/BackProp.png)
 
 A tiny Autograd engine (with a bite! :)). Implements backpropagation (reverse-mode autodiff) over a dynamically built DAG and a small neural networks library on top of it with a PyTorch-like API. Both are tiny, with about 100 and 50 lines of code respectively. The DAG only operates over scalar values, so e.g. we chop up each neuron into all of its individual tiny adds and multiplies. However, this is enough to build up entire deep neural nets doing binary classification, as the demo notebook shows. Potentially useful for educational purposes.
 
@@ -63,6 +63,27 @@ To run the unit tests you will have to install [PyTorch](https://pytorch.org/), 
 ```bash
 python -m pytest
 ```
+
+### Chain Rule of Calculus
+![chain_rule](docs/images/chain_rule.PNG)
+
+This is the equation for the chain rule of calculus. Suppose z = f(g(x)) = f(y) , where z is typically the loss. The gradient of the loss ∂z/∂x is sum of the products of the local derivative  ∂y/∂x and the gradient of the loss with respect to y, ∂z/∂y.
+
+In vector or matrix notation, the back-propagation algorithm consists of performing such a Jacobian-gradient product for each operation in the graph.
+
+![chain_rule_vector](docs/images/chain_rule_vecotor.PNG)
+
+The Jacobian represents the "local" partial derivatives, in contrast to the gradients with respect to all weights, which propagate backwards.
+
+### Flow Chart of Forward and Backward Propagations
+
+The first picture is a flow chart of forward and backward propagation for a single node. (Top) The data flows from left to right during forward propagation, and then the gradients flow from right to left during back-propagation. Notice the gradients accumulate from other operations in the same layer (depicted with dotted lines below).
+
+
+### Common Pitfalls
+The chain rule of calculus may appear clean and straightforward compared to traditional statistical models, but there are many pitfalls when implementing it.
+
+[Common pitfalls](docs/pitfalls.md)
 
 ### License
 
